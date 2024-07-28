@@ -1,0 +1,80 @@
+name: CI
+
+on: [ push ]
+
+jobs:
+    cs:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.3
+                    coverage: xdebug
+            -   name: Get Composer Cache Directory
+                id: composer-cache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+            -   name: Cache dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-
+            -   name: Install Dependencies
+                run: composer install --prefer-dist --no-interaction --optimize-autoloader
+            -   name: Run PHP CS Fixer
+                run: composer run lint.cs@ci
+
+    phpstan:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 8.3
+                  coverage: xdebug
+            - name: Get Composer Cache Directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                  restore-keys: ${{ runner.os }}-composer-
+            - name: Install Dependencies
+              run: composer install --prefer-dist --no-interaction --optimize-autoloader
+            - name: Run PHPStan
+              run: composer run lint.phpstan
+
+    phpunit:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                composer-prefs: [ '--prefer-stable', '--prefer-lowest' ]
+                php-version: [ '8.3' ]
+        name: 'PHPUnit - PHP/${{ matrix.php-version }} - ${{ matrix.composer-prefs }}'
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+                    coverage: xdebug
+            -   name: Get Composer Cache Directory
+                id: composer-cache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+            -   name: Cache dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ matrix.php-version }}-${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                    restore-keys: ${{ runner.os }}-composer-
+            -   run: composer update --prefer-dist --no-interaction ${{ matrix.composer-prefs }}
+            -   name: PHPUnit
+                run: composer run tests@ci

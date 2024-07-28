@@ -1,0 +1,60 @@
+{
+    "name": "jdecool/php-cli-template",
+    "description": "My CLI project description",
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Jérémy DECOOL",
+            "email": "contact@jdecool.fr"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "symfony/config": "^7.1",
+        "symfony/console": "^7.1",
+        "symfony/dependency-injection": "^7.1",
+        "symfony/dotenv": "^7.1"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.43",
+        "friendsofphp/php-cs-fixer": "^3.60",
+        "phpstan/phpstan": "^1.11",
+        "phpstan/extension-installer": "^1.4",
+        "phpunit/phpunit": "^11.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "JDecool\\MyProject\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JDecool\\MyProject\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@composer normalize"
+        ],
+        "post-update-cmd": [
+            "@composer normalize"
+        ],
+        "lint": [
+            "@lint.cs",
+            "@lint.phpstan"
+        ],
+        "lint.cs": "php-cs-fixer fix --diff --verbose",
+        "lint.cs@ci": "php-cs-fixer fix --diff --verbose --dry-run",
+        "lint.phpstan": "phpstan analyze",
+        "tests": "phpunit",
+        "tests@ci": "phpunit --testdox --coverage-text"
+    }
+}

@@ -1,0 +1,17 @@
+version: 2
+updates:
+    - package-ecosystem: "composer"
+      directory: "/"
+      schedule:
+          interval: "daily"
+      groups:
+          doctrine:
+              patterns:
+                  - "doctrine/*"
+          phpstan:
+              patterns:
+                  - "phpstan/*"
+          symfony:
+              patterns:
+                  - "symfony/*"
+                  - "twig/*"

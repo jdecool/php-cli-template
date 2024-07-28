@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use JDecool\MyProject\Application;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Symfony\Component\Dotenv\Dotenv;
+
+require __DIR__.'/vendor/autoload.php';
+
+$dotenv = new Dotenv();
+$dotenv->bootEnv(__DIR__.'/.env');
+
+$container = new ContainerBuilder();
+$container->setParameter('app.root_folder', __DIR__);
+$container->setParameter('app.debug', (bool) ($_ENV['APP_DEBUG'] ?? false));
+
+$loader = new PhpFileLoader($container, new FileLocator());
+$loader->load(__DIR__.'/config/services.php');
+$container->compile(true);
+
+/** @var Application $app */
+$app = $container->get(Application::class);
+$app->setCatchExceptions(false);
+
+exit($app->run(new ArgvInput(), new ConsoleOutput()));
