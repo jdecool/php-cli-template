@@ -1,0 +1,11 @@
+--- /dev/null
++++ ../src/Generator.php
+@@ -226,7 +226,7 @@
+         $repr = '';
+ 
+         for ($index = 0; $index < $length; ++$index) {
+-            $ch = $value{$index};
++            $ch = $value[$index];
+ 
+             if ($ch === "\n") {
+                 $ch = '\n';
