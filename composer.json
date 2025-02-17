@@ -22,7 +22,7 @@
         "friendsofphp/php-cs-fixer": "^3.60",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.0",
-        "phpunit/phpunit": "^11.5",
+        "phpunit/phpunit": "^12.0",
         "symplify/vendor-patches": "^11.3"
     },
     "autoload": {
