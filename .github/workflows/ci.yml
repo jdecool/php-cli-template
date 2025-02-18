@@ -7,7 +7,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout
-                uses: actions/checkout@v2
+                uses: actions/checkout@v4
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
@@ -17,7 +17,7 @@ jobs:
                 id: composer-cache
                 run: echo "::set-output name=dir::$(composer config cache-files-dir)"
             -   name: Cache dependencies
-                uses: actions/cache@v2
+                uses: actions/cache@v4
                 with:
                     path: ${{ steps.composer-cache.outputs.dir }}
                     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -33,7 +33,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
@@ -43,7 +43,7 @@ jobs:
               id: composer-cache
               run: echo "::set-output name=dir::$(composer config cache-files-dir)"
             - name: Cache dependencies
-              uses: actions/cache@v2
+              uses: actions/cache@v4
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -62,7 +62,7 @@ jobs:
         name: 'PHPUnit - PHP/${{ matrix.php-version }} - ${{ matrix.composer-prefs }}'
         steps:
             -   name: Checkout
-                uses: actions/checkout@v2
+                uses: actions/checkout@v4
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
@@ -72,7 +72,7 @@ jobs:
                 id: composer-cache
                 run: echo "::set-output name=dir::$(composer config cache-files-dir)"
             -   name: Cache dependencies
-                uses: actions/cache@v2
+                uses: actions/cache@v4
                 with:
                     path: ${{ steps.composer-cache.outputs.dir }}
                     key: ${{ matrix.php-version }}-${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
