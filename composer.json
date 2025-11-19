@@ -23,7 +23,7 @@
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^12.0",
-        "symplify/vendor-patches": "^11.3"
+        "symplify/vendor-patches": "^12.0"
     },
     "autoload": {
         "psr-4": {
