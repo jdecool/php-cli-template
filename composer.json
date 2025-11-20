@@ -17,7 +17,7 @@
         "symfony/dotenv": "^7.2"
     },
     "require-dev": {
-        "cweagans/composer-patches": "^1.7",
+        "cweagans/composer-patches": "^2.0",
         "ergebnis/composer-normalize": "^2.43",
         "friendsofphp/php-cs-fixer": "^3.60",
         "phpstan/extension-installer": "^1.4",
