@@ -47,9 +47,6 @@
         "patches": {
             "icecave/repr": [
                 "patches/icecave-repr-src-generator-php.patch"
-            ],
-            "nette/di": [
-                "patches/icecave_repr_php84.patch"
             ]
         }
     },
