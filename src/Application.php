@@ -20,7 +20,7 @@ final class Application extends BaseApplication
         parent::__construct(self::NAME, self::VERSION);
 
         foreach ($commands as $command) {
-            $this->add($command);
+            $this->addCommand($command);
         }
     }
 }
